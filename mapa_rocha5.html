@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAPA DE CARGA CONTAMINANTE - Río Rocha</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        #mapid { height: 85vh; width: 90%; margin: 2.5vh auto; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { text-align: center; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <h1>MAPA DE CARGA CONTAMINANTE EN EL RÍO ROCHA</h1>
+
+    <div id="mapid"></div>
+
+    <script>
+        // Paso 1: Crea el mapa y lo centra en Cochabamba, Bolivia
+        var mymap = L.map('mapid').setView([-17.40, -66.08], 12);
+
+        // Paso 2: Agrega la capa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        // Paso 3: Define los puntos de contaminación de ejemplo
+        var puntosContaminacion = [
+            [-17.378, -66.162, 0.6],
+            [-17.383, -66.157, 0.8],
+            [-17.388, -66.152, 0.9],
+            [-17.393, -66.147, 0.7]
+        ];
+
+        // Crea la capa de calor para los puntos de contaminación
+        L.heatLayer(puntosContaminacion, {
+            radius: 25,
+            blur: 15,
+            gradient: { 0.0: 'green', 0.5: 'yellow', 1.0: 'red' }
+        }).addTo(mymap);
+
+        // Paso 4: Agrega los marcadores para los puntos específicos
+        // Nota: Las coordenadas que proporcionaste usan grados (°), pero en el código solo se usa el número decimal.
+        L.marker([-17.422382, -66.024038]).addTo(mymap)
+            .bindPopup("<b>PUENTE SILES</b>").openPopup();
+
+        L.marker([-17.408515, -65.992970]).addTo(mymap)
+            .bindPopup("<b>PUNTO CHIÑATA</b>");
+
+        L.marker([-17.396697, -66.063679]).addTo(mymap)
+            .bindPopup("<b>PUENTE PELICANOS</b>");
+
+    </script>
+</body>
+</html>
